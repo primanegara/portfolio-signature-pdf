@@ -1,0 +1,19 @@
+Create website for e-sign pdf
+1. Create landing page with browse pdf button
+2. Upload pdf with maximum size 20mb and show pdf in new page /edit
+3. in page /edit has 2 columns left side is pdf viewer and right side.
+Left side is showing the PDF pages includes navigation (next, previous, zoom in and out).
+Right side is showing 2 vertical column with 2 options:
+Option 1:  Draw signature --> when this clicked, show popup with canvas to draw the signature
+Option 2:  Add signature to pdf --> when this clicked, show popup with upload signature button
+4. the signature can drag everywhere to dropoff the signature itself
+5. When its done, show the Download button to download the pdf with signature
+
+Inspiration: https://parafaman.com/
+
+Tech Stacks:
+npm: latest version
+react: latest version
+shadcn ui: latest version
+tailwindcss: latest version
+any other library you think is necessary about pdf reader and signature canvas and upload png/jpg signature that is open source and stable version
