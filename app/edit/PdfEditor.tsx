@@ -80,16 +80,30 @@ export default function EditPage() {
     };
 
     const addSignature = (dataUrl: string) => {
-        const newSignature: Signature = {
-            id: Date.now().toString(),
-            dataUrl,
-            x: 50,
-            y: 50,
-            width: 150,
-            height: 75,
-            page: pageNumber,
+        const img = new window.Image();
+        img.onload = () => {
+            const aspect = img.width / img.height;
+            let width = 150;
+            let height = 150 / aspect;
+            
+            // Limit height so it doesn't overflow
+            if (height > 150) {
+                height = 150;
+                width = height * aspect;
+            }
+
+            const newSignature: Signature = {
+                id: Date.now().toString(),
+                dataUrl,
+                x: 50,
+                y: 50,
+                width,
+                height,
+                page: pageNumber,
+            };
+            setSignatures((prev) => [...prev, newSignature]);
         };
-        setSignatures([...signatures, newSignature]);
+        img.src = dataUrl;
     };
 
     const updateSignature = (id: string, updates: Partial<Signature>) => {
@@ -229,6 +243,7 @@ export default function EditPage() {
                                 size={{ width: sig.width, height: sig.height }}
                                 position={{ x: sig.x, y: sig.y }}
                                 bounds="parent"
+                                lockAspectRatio={true}
                                 onDragStop={(e, d) => {
                                     updateSignature(sig.id, { x: d.x, y: d.y });
                                 }}
@@ -243,7 +258,7 @@ export default function EditPage() {
                             >
                                 <div className="relative w-full h-full">
                                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                                    <img src={sig.dataUrl} alt="Signature" className="w-full h-full object-contain pointer-events-none" />
+                                    <img src={sig.dataUrl} alt="Signature" className="w-full h-full pointer-events-none" />
                                     <div className="absolute -top-3 -right-3 hidden group-hover:flex gap-1 z-50 pointer-events-auto">
                                         <button
                                             onClick={() => duplicateSignature(sig.id)}
